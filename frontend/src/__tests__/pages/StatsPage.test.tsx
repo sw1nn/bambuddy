@@ -147,7 +147,7 @@ describe('StatsPage', () => {
       http.get('/api/v1/printers/', () => {
         return HttpResponse.json(mockPrinters);
       }),
-      http.get('/api/v1/archives/', () => {
+      http.get('/api/v1/archives/slim', () => {
         return HttpResponse.json(mockArchives);
       }),
       http.get('/api/v1/settings/', () => {

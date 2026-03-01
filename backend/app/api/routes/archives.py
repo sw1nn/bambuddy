@@ -22,7 +22,7 @@ from backend.app.models.archive import PrintArchive
 from backend.app.models.filament import Filament
 from backend.app.models.spool_usage_history import SpoolUsageHistory
 from backend.app.models.user import User
-from backend.app.schemas.archive import ArchiveResponse, ArchiveStats, ArchiveUpdate, ReprintRequest
+from backend.app.schemas.archive import ArchiveResponse, ArchiveSlim, ArchiveStats, ArchiveUpdate, ReprintRequest
 from backend.app.services.archive import ArchiveService
 from backend.app.utils.threemf_tools import extract_nozzle_mapping_from_3mf
 
@@ -152,6 +152,78 @@ async def list_archives(
         has_duplicate = has_hash_dup or has_name_dup
         result.append(archive_to_response(a, duplicate_count=1 if has_duplicate else 0))
     return result
+
+
+@router.get("/slim", response_model=list[ArchiveSlim])
+async def list_archives_slim(
+    date_from: date | None = Query(None),
+    date_to: date | None = Query(None),
+    limit: int = 10000,
+    offset: int = 0,
+    db: AsyncSession = Depends(get_db),
+    _: User | None = RequirePermissionIfAuthEnabled(Permission.ARCHIVES_READ),
+):
+    """Lightweight archive listing for stats/dashboard widgets.
+
+    Returns only the fields needed for client-side aggregation,
+    skipping duplicate detection, file paths, and extra_data.
+    """
+    filters = []
+    if date_from:
+        dt_from = datetime.combine(date_from, time.min, tzinfo=timezone.utc)
+        filters.append(PrintArchive.created_at >= dt_from)
+    if date_to:
+        dt_to = datetime.combine(date_to, time.max, tzinfo=timezone.utc)
+        filters.append(PrintArchive.created_at <= dt_to)
+
+    query = (
+        select(
+            PrintArchive.printer_id,
+            PrintArchive.print_name,
+            PrintArchive.print_time_seconds,
+            PrintArchive.started_at,
+            PrintArchive.completed_at,
+            PrintArchive.filament_used_grams,
+            PrintArchive.filament_type,
+            PrintArchive.filament_color,
+            PrintArchive.status,
+            PrintArchive.cost,
+            PrintArchive.quantity,
+            PrintArchive.created_at,
+        )
+        .where(*filters)
+        .order_by(PrintArchive.created_at.desc())
+        .limit(limit)
+        .offset(offset)
+    )
+    result = await db.execute(query)
+    rows = result.all()
+
+    return [
+        {
+            "printer_id": r.printer_id,
+            "print_name": r.print_name,
+            "print_time_seconds": r.print_time_seconds,
+            "actual_time_seconds": (
+                int((r.completed_at - r.started_at).total_seconds())
+                if r.started_at
+                and r.completed_at
+                and r.status == "completed"
+                and (r.completed_at - r.started_at).total_seconds() > 0
+                else None
+            ),
+            "filament_used_grams": r.filament_used_grams,
+            "filament_type": r.filament_type,
+            "filament_color": r.filament_color,
+            "status": r.status,
+            "started_at": r.started_at,
+            "completed_at": r.completed_at,
+            "cost": r.cost,
+            "quantity": r.quantity,
+            "created_at": r.created_at,
+        }
+        for r in rows
+    ]
 
 
 @router.get("/search", response_model=list[ArchiveResponse])

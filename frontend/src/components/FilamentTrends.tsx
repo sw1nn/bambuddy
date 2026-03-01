@@ -12,13 +12,13 @@ import {
   Pie,
   Cell,
 } from 'recharts';
-import type { Archive } from '../api/client';
+import type { ArchiveSlim } from '../api/client';
 import { MetricToggle, type Metric } from './MetricToggle';
 import { parseUTCDate } from '../utils/date';
 import { formatWeight } from '../utils/weight';
 
 interface FilamentTrendsProps {
-  archives: Archive[];
+  archives: ArchiveSlim[];
   currency?: string;
 }
 

@@ -373,6 +373,22 @@ export interface Archive {
   created_by_username: string | null;
 }
 
+export interface ArchiveSlim {
+  printer_id: number | null;
+  print_name: string | null;
+  print_time_seconds: number | null;
+  actual_time_seconds: number | null;
+  filament_used_grams: number | null;
+  filament_type: string | null;
+  filament_color: string | null;
+  status: string;
+  started_at: string | null;
+  completed_at: string | null;
+  cost: number | null;
+  quantity: number;
+  created_at: string;
+}
+
 export interface PrintLogEntry {
   id: number;
   print_name: string | null;
@@ -2498,6 +2514,12 @@ export const api = {
     if (dateFrom) params.set('date_from', dateFrom);
     if (dateTo) params.set('date_to', dateTo);
     return request<Archive[]>(`/archives/?${params}`);
+  },
+  getArchivesSlim: (dateFrom?: string, dateTo?: string) => {
+    const params = new URLSearchParams();
+    if (dateFrom) params.set('date_from', dateFrom);
+    if (dateTo) params.set('date_to', dateTo);
+    return request<ArchiveSlim[]>(`/archives/slim?${params}`);
   },
   getArchive: (id: number) => request<Archive>(`/archives/${id}`),
   searchArchives: (query: string, options?: {

@@ -34,8 +34,9 @@ class FailureAnalysisService:
         Returns:
             Dictionary with failure analysis results
         """
-        # Build base query
+        # Build base query — separate date vs non-date filters for trend reuse
         base_filter = []
+        non_date_filter = []
         if date_from or date_to:
             if date_from:
                 dt_from = datetime.combine(date_from, time.min, tzinfo=timezone.utc)
@@ -43,14 +44,19 @@ class FailureAnalysisService:
             if date_to:
                 dt_to = datetime.combine(date_to, time.max, tzinfo=timezone.utc)
                 base_filter.append(PrintArchive.created_at <= dt_to)
+            # Compute effective span for trend
+            range_start = dt_from if date_from else datetime.now(timezone.utc) - timedelta(days=365)
+            range_end = dt_to if date_to else datetime.now(timezone.utc)
+            effective_days = max((range_end - range_start).days, 1)
         else:
             effective_days = days if days is not None else 30
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=effective_days)
             base_filter.append(PrintArchive.created_at >= cutoff_date)
         if printer_id:
-            base_filter.append(PrintArchive.printer_id == printer_id)
+            non_date_filter.append(PrintArchive.printer_id == printer_id)
         if project_id:
-            base_filter.append(PrintArchive.project_id == project_id)
+            non_date_filter.append(PrintArchive.project_id == project_id)
+        base_filter.extend(non_date_filter)
 
         # Total counts
         total_result = await self.db.execute(select(func.count(PrintArchive.id)).where(and_(*base_filter)))
@@ -154,15 +160,16 @@ class FailureAnalysisService:
 
         # Failure rate trend (by week)
         trend_data = []
-        for i in range(min(days // 7, 12)):  # Up to 12 weeks
+        num_weeks = min(effective_days // 7, 12)
+        for i in range(num_weeks):
             week_end = datetime.now(timezone.utc) - timedelta(weeks=i)
             week_start = week_end - timedelta(weeks=1)
 
-            week_filter = base_filter.copy()
-            week_filter[0] = and_(
+            week_filter = [
                 PrintArchive.created_at >= week_start,
                 PrintArchive.created_at < week_end,
-            )
+                *non_date_filter,
+            ]
 
             week_total = await self.db.execute(select(func.count(PrintArchive.id)).where(and_(*week_filter)))
             week_failed = await self.db.execute(
@@ -187,7 +194,7 @@ class FailureAnalysisService:
         trend_data.reverse()  # Oldest first
 
         return {
-            "period_days": days,
+            "period_days": effective_days,
             "total_prints": total_prints,
             "failed_prints": failed_prints,
             "failure_rate": round(failure_rate, 1),

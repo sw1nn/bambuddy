@@ -32,7 +32,7 @@ import {
 import { Button } from '../components/Button';
 import { useToast } from '../contexts/ToastContext';
 import { useAuth } from '../contexts/AuthContext';
-import { api, type Archive } from '../api/client';
+import { api, type ArchiveSlim } from '../api/client';
 import { PrintCalendar } from '../components/PrintCalendar';
 import { FilamentTrends } from '../components/FilamentTrends';
 import { Dashboard, type DashboardWidget } from '../components/Dashboard';
@@ -368,7 +368,7 @@ function PrinterStatsWidget({
   printerMap,
 }: {
   stats: { prints_by_printer: Record<string, number> } | undefined;
-  archives: Archive[];
+  archives: ArchiveSlim[];
   printerMap: Map<string, string>;
 }) {
   const { t } = useTranslation();
@@ -669,7 +669,7 @@ function FailureAnalysisWidget({ size = 1, dateFrom, dateTo }: {
   );
 }
 
-function RecordsWidget({ archives, currency }: { archives: Archive[]; currency: string }) {
+function RecordsWidget({ archives, currency }: { archives: ArchiveSlim[]; currency: string }) {
   const { t } = useTranslation();
 
   const records = useMemo(() => {
@@ -684,8 +684,8 @@ function RecordsWidget({ archives, currency }: { archives: Archive[]; currency: 
     if (archives.length === 0) return result;
 
     // Find the archive with the highest value for a given field
-    const findMax = (getter: (a: Archive) => number | null | undefined): { archive: Archive | null; value: number } => {
-      let best: Archive | null = null;
+    const findMax = (getter: (a: ArchiveSlim) => number | null | undefined): { archive: ArchiveSlim | null; value: number } => {
+      let best: ArchiveSlim | null = null;
       let bestVal = 0;
       archives.forEach(a => {
         const v = getter(a);
@@ -742,14 +742,14 @@ function RecordsWidget({ archives, currency }: { archives: Archive[]; currency: 
         iconColor: 'text-purple-400',
         label: t('stats.busiestDay'),
         value: `${busiestCount} ${t('common.prints')}`,
-        detail: new Date(busiestDay).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
+        detail: (() => { const [y, m, d] = busiestDay.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }); })(),
       });
     }
 
     // Success streak
     const sorted = [...archives]
       .filter(a => a.status === 'completed' || a.status === 'failed')
-      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      .sort((a, b) => new Date(b.completed_at || b.created_at).getTime() - new Date(a.completed_at || a.created_at).getTime());
     let streak = 0;
     for (const a of sorted) {
       if (a.status === 'completed') streak++;
@@ -855,8 +855,8 @@ export function StatsPage() {
   });
 
   const { data: archives, refetch: refetchArchives } = useQuery({
-    queryKey: ['archives', effectiveDateRange.dateFrom, effectiveDateRange.dateTo],
-    queryFn: () => api.getArchives(undefined, undefined, 10000, 0, effectiveDateRange.dateFrom, effectiveDateRange.dateTo),
+    queryKey: ['archivesSlim', effectiveDateRange.dateFrom, effectiveDateRange.dateTo],
+    queryFn: () => api.getArchivesSlim(effectiveDateRange.dateFrom, effectiveDateRange.dateTo),
   });
 
   const { data: settings } = useQuery({
