@@ -27,6 +27,7 @@ All notable changes to Bambuddy will be documented in this file.
 ### Improved
 - **SpoolBuddy Scale Value Stabilization** — The SpoolBuddy daemon now suppresses redundant scale weight reports: only sends updates when the weight changes by ≥2g. Previously every 1-second report interval sent a reading regardless of change, and stability state flips (stable ↔ unstable) also triggered reports — when ADC noise kept the spread hovering around the 2g stability threshold, the flag toggled every cycle, forcing a report with a slightly different weight each time. Removed stability flipping as a report trigger (the stable flag is still included in each report for consumers). Also increased the NAU7802 moving average window from 5 to 20 samples (500ms → 2s) to smooth ADC noise. The frontend also applies a 3g display threshold as defense-in-depth.
 - **SpoolBuddy TopBar: Online Printer Selection** — The printer selector in the SpoolBuddy top bar now only shows online printers and auto-selects the first online printer. If the currently selected printer goes offline, it automatically switches to the next available online printer. Also replaced the placeholder icon with the SpoolBuddy logo.
+- **Updates Card Separates Firmware and Software Settings** — The Updates card on the Settings page mixed printer firmware and Bambuddy software update toggles with no visual grouping. Now splits the card into two labeled sections ("Printer Firmware" and "Bambuddy Software") separated by a divider, making it clear which toggles control what.
 
 ## [0.2.1] - 2026-02-27
 
