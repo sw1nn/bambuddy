@@ -2519,7 +2519,8 @@ export const api = {
     const params = new URLSearchParams();
     if (dateFrom) params.set('date_from', dateFrom);
     if (dateTo) params.set('date_to', dateTo);
-    return request<ArchiveSlim[]>(`/archives/slim?${params}`);
+    const qs = params.toString();
+    return request<ArchiveSlim[]>(`/archives/slim${qs ? `?${qs}` : ''}`);
   },
   getArchive: (id: number) => request<Archive>(`/archives/${id}`),
   searchArchives: (query: string, options?: {
@@ -2587,7 +2588,8 @@ export const api = {
     if (options?.dateTo) params.set('date_to', options.dateTo);
     if (options?.printerId) params.set('printer_id', String(options.printerId));
     if (options?.projectId) params.set('project_id', String(options.projectId));
-    return request<FailureAnalysis>(`/archives/analysis/failures?${params}`);
+    const qs = params.toString();
+    return request<FailureAnalysis>(`/archives/analysis/failures${qs ? `?${qs}` : ''}`);
   },
   compareArchives: (archiveIds: number[]) =>
     request<ArchiveComparison>(`/archives/compare?archive_ids=${archiveIds.join(',')}`),

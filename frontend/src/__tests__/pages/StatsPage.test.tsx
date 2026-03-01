@@ -133,8 +133,8 @@ const mockFailureAnalysis = {
   failures_by_hour: {},
   recent_failures: [],
   trend: [
-    { week: '2024-W01', failure_rate: 6.0 },
-    { week: '2024-W02', failure_rate: 5.0 },
+    { week_start: '2024-01-01', total_prints: 50, failed_prints: 3, failure_rate: 6.0 },
+    { week_start: '2024-01-08', total_prints: 50, failed_prints: 2, failure_rate: 5.0 },
   ],
 };
 

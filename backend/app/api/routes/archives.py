@@ -158,7 +158,7 @@ async def list_archives(
 async def list_archives_slim(
     date_from: date | None = Query(None),
     date_to: date | None = Query(None),
-    limit: int = 10000,
+    limit: int = Query(default=10000, le=50000),
     offset: int = 0,
     db: AsyncSession = Depends(get_db),
     _: User | None = RequirePermissionIfAuthEnabled(Permission.ARCHIVES_READ),

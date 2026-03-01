@@ -20,11 +20,16 @@ import { formatWeight } from '../utils/weight';
 interface FilamentTrendsProps {
   archives: ArchiveSlim[];
   currency?: string;
+  dateFrom?: string;
+  dateTo?: string;
 }
 
 const COLORS = ['#00ae42', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316'];
 
-export function FilamentTrends({ archives, currency = '$' }: FilamentTrendsProps) {
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const HOUR_SUFFIXES = ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'];
+
+export function FilamentTrends({ archives, currency = '$', dateFrom, dateTo }: FilamentTrendsProps) {
   const { t } = useTranslation();
   const [filamentTypeMetric, setFilamentTypeMetric] = useState<Metric>('weight');
   const [colorMetric, setColorMetric] = useState<Metric>('weight');
@@ -52,6 +57,51 @@ export function FilamentTrends({ archives, currency = '$' }: FilamentTrendsProps
         dateLabel: new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
       }));
   }, [archives]);
+
+  // Compute effective span in days from props or archive spread
+  const spanDays = useMemo(() => {
+    if (dateFrom && dateTo) {
+      return Math.max((new Date(dateTo).getTime() - new Date(dateFrom).getTime()) / 86400000, 0) + 1;
+    }
+    if (dateFrom) {
+      return Math.max((Date.now() - new Date(dateFrom).getTime()) / 86400000, 0) + 1;
+    }
+    if (archives.length < 2) return 0;
+    const times = archives.map(a => new Date(a.completed_at || a.created_at).getTime());
+    return (Math.max(...times) - Math.min(...times)) / 86400000;
+  }, [archives, dateFrom, dateTo]);
+
+  // Calculate hourly data for short timeframes (≤ 7 days)
+  const hourlyData = useMemo(() => {
+    if (spanDays > 7) return [];
+
+    const dataMap = new Map<string, { date: string; filament: number; cost: number; prints: number }>();
+    const multiDay = spanDays > 1;
+
+    archives.forEach(archive => {
+      const date = parseUTCDate(archive.completed_at || archive.created_at) || new Date();
+      const h = date.getHours();
+      const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}T${String(h).padStart(2, '0')}`;
+
+      const existing = dataMap.get(key) || { date: key, filament: 0, cost: 0, prints: 0 };
+      existing.filament += archive.filament_used_grams || 0;
+      existing.cost += archive.cost || 0;
+      existing.prints += archive.quantity || 1;
+      dataMap.set(key, existing);
+    });
+
+    return Array.from(dataMap.values())
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .map(d => {
+        const [datePart, hourPart] = d.date.split('T');
+        const dt = new Date(datePart);
+        const h = parseInt(hourPart, 10);
+        const label = multiDay
+          ? `${DAY_NAMES[dt.getDay()]} ${HOUR_SUFFIXES[h]}`
+          : HOUR_SUFFIXES[h];
+        return { ...d, dateLabel: label };
+      });
+  }, [archives, spanDays]);
 
   // Calculate weekly aggregated data when there are many daily points
   const weeklyData = useMemo(() => {
@@ -184,7 +234,7 @@ export function FilamentTrends({ archives, currency = '$' }: FilamentTrendsProps
     filamentTypeMetric === 'prints' ? filamentTypePrintData :
     filamentTypeTimeData;
 
-  const chartData = weeklyData;
+  const chartData = spanDays <= 7 && hourlyData.length > 0 ? hourlyData : weeklyData;
   const totalFilament = archives.reduce((sum, a) => sum + (a.filament_used_grams || 0), 0);
   const totalCost = archives.reduce((sum, a) => sum + (a.cost || 0), 0);
   const totalPrints = archives.reduce((sum, a) => sum + (a.quantity || 1), 0);

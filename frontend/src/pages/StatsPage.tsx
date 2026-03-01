@@ -135,11 +135,11 @@ function QuickStatsWidget({
 
   const items = [
     { icon: Package, color: 'text-bambu-green', label: t('stats.totalPrints'), value: `${stats?.total_prints || 0}` },
-    { icon: Clock, color: 'text-blue-400', label: t('stats.printTime'), value: `${stats?.total_print_time_hours.toFixed(1) || 0}h` },
+    { icon: Clock, color: 'text-blue-400', label: t('stats.printTime'), value: `${stats?.total_print_time_hours?.toFixed(1) ?? '0'}h` },
     { icon: Package, color: 'text-orange-400', label: t('stats.filamentUsed'), value: formatWeight(stats?.total_filament_grams || 0) },
-    { icon: DollarSign, color: 'text-green-400', label: t('stats.filamentCost'), value: `${currency} ${stats?.total_cost.toFixed(2) || '0.00'}` },
-    { icon: Zap, color: 'text-yellow-400', label: t('stats.energyUsed'), value: `${stats?.total_energy_kwh.toFixed(3) || '0.000'} kWh` },
-    { icon: DollarSign, color: 'text-yellow-500', label: t('stats.energyCost'), value: `${currency} ${stats?.total_energy_cost.toFixed(2) || '0.00'}` },
+    { icon: DollarSign, color: 'text-green-400', label: t('stats.filamentCost'), value: `${currency} ${stats?.total_cost?.toFixed(2) ?? '0.00'}` },
+    { icon: Zap, color: 'text-yellow-400', label: t('stats.energyUsed'), value: `${stats?.total_energy_kwh?.toFixed(3) ?? '0.000'} kWh` },
+    { icon: DollarSign, color: 'text-yellow-500', label: t('stats.energyCost'), value: `${currency} ${stats?.total_energy_cost?.toFixed(2) ?? '0.00'}` },
   ];
 
   return (
@@ -350,15 +350,137 @@ function TimeAccuracyWidget({
   );
 }
 
+function HourlyHeatmap({ printDates, dateFrom, dateTo }: { printDates: string[]; dateFrom: string; dateTo: string }) {
+  const { days, hourlyCounts, maxCount } = useMemo(() => {
+    const start = new Date(dateFrom + 'T00:00:00');
+    const end = new Date(dateTo + 'T00:00:00');
+    const days: { key: string; label: string }[] = [];
+    const fmtLocal = (d: Date) =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const current = new Date(start);
+    while (current <= end) {
+      days.push({
+        key: fmtLocal(current),
+        label: current.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }),
+      });
+      current.setDate(current.getDate() + 1);
+    }
+
+    // Count prints per (day, hour)
+    const counts: Record<string, number> = {};
+    let max = 0;
+    printDates.forEach(d => {
+      const date = parseUTCDate(d);
+      if (!date) return;
+      const dayKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      const k = `${dayKey}-${date.getHours()}`;
+      counts[k] = (counts[k] || 0) + 1;
+      if (counts[k] > max) max = counts[k];
+    });
+
+    return { days, hourlyCounts: counts, maxCount: Math.max(1, max) };
+  }, [printDates, dateFrom, dateTo]);
+
+  const getColor = (count: number) => {
+    if (count === 0) return 'bg-bambu-dark';
+    const intensity = count / maxCount;
+    if (intensity <= 0.25) return 'bg-bambu-green/30';
+    if (intensity <= 0.5) return 'bg-bambu-green/50';
+    if (intensity <= 0.75) return 'bg-bambu-green/75';
+    return 'bg-bambu-green';
+  };
+
+  const cellSize = 20;
+  const gap = 2;
+
+  const dayLabelWidth = 80;
+
+  return (
+    <div className="w-full overflow-x-auto">
+      <div className="inline-flex flex-col" style={{ gap }}>
+        {/* Hour labels row */}
+        <div className="flex" style={{ gap, marginLeft: dayLabelWidth + 4 }}>
+          {HOUR_LABELS.map((label, i) => (
+            <div
+              key={i}
+              className="text-bambu-gray text-[10px] text-center"
+              style={{ width: cellSize, visibility: i % 2 === 0 ? 'visible' : 'hidden' }}
+            >
+              {label}
+            </div>
+          ))}
+        </div>
+
+        {/* Day rows */}
+        {days.map(day => (
+          <div key={day.key} className="flex items-center" style={{ gap }}>
+            <div
+              className="text-bambu-gray text-[10px] flex-shrink-0 truncate"
+              style={{ width: dayLabelWidth }}
+            >
+              {day.label}
+            </div>
+            {Array.from({ length: 24 }, (_, hour) => {
+              const count = hourlyCounts[`${day.key}-${hour}`] || 0;
+              return (
+                <div
+                  key={hour}
+                  className={`rounded-sm ${getColor(count)}`}
+                  style={{ width: cellSize, height: cellSize }}
+                  title={`${day.label} ${HOUR_LABELS[hour]}: ${count} print${count !== 1 ? 's' : ''}`}
+                />
+              );
+            })}
+          </div>
+        ))}
+      </div>
+
+      {/* Legend */}
+      <div className="flex items-center gap-2 mt-3 text-bambu-gray text-xs">
+        <span>Less</span>
+        <div className="flex" style={{ gap }}>
+          <div className="rounded-sm bg-bambu-dark" style={{ width: cellSize, height: cellSize }} />
+          <div className="rounded-sm bg-bambu-green/30" style={{ width: cellSize, height: cellSize }} />
+          <div className="rounded-sm bg-bambu-green/50" style={{ width: cellSize, height: cellSize }} />
+          <div className="rounded-sm bg-bambu-green/75" style={{ width: cellSize, height: cellSize }} />
+          <div className="rounded-sm bg-bambu-green" style={{ width: cellSize, height: cellSize }} />
+        </div>
+        <span>More</span>
+      </div>
+    </div>
+  );
+}
+
 function PrintActivityWidget({
   printDates,
   size = 2,
+  dateFrom,
+  dateTo,
 }: {
   printDates: string[];
   size?: 1 | 2 | 4;
+  dateFrom?: string;
+  dateTo?: string;
 }) {
-  // Show more months when widget is larger - cell size auto-calculated
-  const months = size === 1 ? 3 : size === 2 ? 6 : 12;
+  const spanDays = useMemo(() => {
+    if (dateFrom && dateTo) {
+      return Math.max((new Date(dateTo).getTime() - new Date(dateFrom).getTime()) / 86400000, 0) + 1;
+    }
+    if (dateFrom) {
+      return Math.max((Date.now() - new Date(dateFrom).getTime()) / 86400000, 0) + 1;
+    }
+    return Infinity;
+  }, [dateFrom, dateTo]);
+
+  if (spanDays <= 7 && dateFrom && dateTo) {
+    return <HourlyHeatmap printDates={printDates} dateFrom={dateFrom} dateTo={dateTo} />;
+  }
+
+  // Calculate months from the timeframe span, fall back to size-based default for all-time
+  const sizeDefault = size === 1 ? 3 : size === 2 ? 6 : 12;
+  const months = spanDays === Infinity
+    ? sizeDefault
+    : Math.max(1, Math.ceil(spanDays / 30));
   return <PrintCalendar printDates={printDates} months={months} />;
 }
 
@@ -456,7 +578,7 @@ function PrinterStatsWidget({
       else dayValues[day] += (a.actual_time_seconds || a.print_time_seconds || 0) / 3600;
       const weekStart = new Date(date);
       weekStart.setDate(date.getDate() - ((date.getDay() + 6) % 7));
-      weeksSet.add(weekStart.toISOString().split('T')[0]);
+      weeksSet.add(`${weekStart.getFullYear()}-${String(weekStart.getMonth() + 1).padStart(2, '0')}-${String(weekStart.getDate()).padStart(2, '0')}`);
     });
     const numWeeks = Math.max(weeksSet.size, 1);
     return DAY_LABELS.map((name, i) => ({
@@ -569,15 +691,19 @@ function PrinterStatsWidget({
 function FilamentTrendsWidget({
   archives,
   currency,
+  dateFrom,
+  dateTo,
 }: {
   archives: Parameters<typeof FilamentTrends>[0]['archives'];
   currency: string;
+  dateFrom?: string;
+  dateTo?: string;
 }) {
   const { t } = useTranslation();
   if (!archives || archives.length === 0) {
     return <p className="text-bambu-gray text-center py-4">{t('stats.noPrintData')}</p>;
   }
-  return <FilamentTrends archives={archives} currency={currency} />;
+  return <FilamentTrends archives={archives} currency={currency} dateFrom={dateFrom} dateTo={dateTo} />;
 }
 
 function FailureAnalysisWidget({ size = 1, dateFrom, dateTo }: {
@@ -803,12 +929,22 @@ export function StatsPage() {
   const [dashboardKey, setDashboardKey] = useState(0);
   const [hiddenCount, setHiddenCount] = useState(0);
   const [isRecalculating, setIsRecalculating] = useState(false);
-  const [timeframe, setTimeframe] = useState<TimeframeState>({
-    preset: 'all-time',
-    dateFrom: undefined,
-    dateTo: undefined,
+  const [timeframe, setTimeframe] = useState<TimeframeState>(() => {
+    try {
+      const saved = localStorage.getItem('bambusy-stats-timeframe');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.preset) return parsed;
+      }
+    } catch { /* ignore */ }
+    return { preset: 'all-time', dateFrom: undefined, dateTo: undefined };
   });
   const [showTimeframePicker, setShowTimeframePicker] = useState(false);
+
+  // Persist timeframe selection
+  useEffect(() => {
+    localStorage.setItem('bambusy-stats-timeframe', JSON.stringify(timeframe));
+  }, [timeframe]);
 
   const effectiveDateRange = useMemo(() => {
     if (timeframe.preset === 'custom') {
@@ -939,7 +1075,7 @@ export function StatsPage() {
     {
       id: 'print-activity',
       title: t('stats.printActivity'),
-      component: (size) => <PrintActivityWidget printDates={printDates} size={size} />,
+      component: (size) => <PrintActivityWidget printDates={printDates} size={size} dateFrom={effectiveDateRange.dateFrom} dateTo={effectiveDateRange.dateTo} />,
       defaultSize: 2,
     },
     {
@@ -957,7 +1093,7 @@ export function StatsPage() {
     {
       id: 'filament-trends',
       title: t('stats.filamentTrends'),
-      component: <FilamentTrendsWidget archives={archives || []} currency={currency} />,
+      component: <FilamentTrendsWidget archives={archives || []} currency={currency} dateFrom={effectiveDateRange.dateFrom} dateTo={effectiveDateRange.dateTo} />,
       defaultSize: 4,
     },
   ];
