@@ -53,7 +53,7 @@ export function VirtualKeyboard() {
     }, 100);
   }, []);
 
-  const handleFocusOut = useCallback((_e: FocusEvent) => {
+  const handleFocusOut = useCallback(() => {
     // Delay to allow click on keyboard buttons to register
     setTimeout(() => {
       const active = document.activeElement;
@@ -77,6 +77,20 @@ export function VirtualKeyboard() {
       document.removeEventListener('focusout', handleFocusOut);
     };
   }, [handleFocusIn, handleFocusOut]);
+
+  // Two-phase close: hide the keyboard immediately but keep the backdrop
+  // alive for 400ms to absorb the ghost click that touch devices synthesize.
+  const dismiss = useCallback(() => {
+    closingRef.current = true;
+    setClosing(true);
+    activeInput.current?.blur();
+    activeInput.current = null;
+    setTimeout(() => {
+      setVisible(false);
+      setClosing(false);
+      closingRef.current = false;
+    }, 400);
+  }, []);
 
   const onKeyPress = useCallback((button: string) => {
     const input = activeInput.current;
@@ -111,21 +125,7 @@ export function VirtualKeyboard() {
     // Sync keyboard internal state
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (keyboardRef.current as any)?.setInput?.(input.value);
-  }, [layoutName]);
-
-  // Two-phase close: hide the keyboard immediately but keep the backdrop
-  // alive for 400ms to absorb the ghost click that touch devices synthesize.
-  const dismiss = useCallback(() => {
-    closingRef.current = true;
-    setClosing(true);
-    activeInput.current?.blur();
-    activeInput.current = null;
-    setTimeout(() => {
-      setVisible(false);
-      setClosing(false);
-      closingRef.current = false;
-    }, 400);
-  }, []);
+  }, [layoutName, dismiss]);
 
   if (!visible) return null;
 

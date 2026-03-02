@@ -818,6 +818,7 @@ wlr-randr --output HDMI-A-1 --custom-mode 1024x600@60 &
 chromium --kiosk --no-first-run --disable-infobars \\
   --disable-session-crashed-bubble --disable-features=TranslateUI \\
   --noerrdialogs --disable-component-update \\
+  --overscroll-history-navigation=0 \\
   --ozone-platform=wayland \\
   $KIOSK_URL &
 EOF

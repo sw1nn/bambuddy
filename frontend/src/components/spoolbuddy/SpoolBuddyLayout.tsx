@@ -1,29 +1,52 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { SpoolBuddyTopBar } from './SpoolBuddyTopBar';
 import { SpoolBuddyBottomNav } from './SpoolBuddyBottomNav';
 import { SpoolBuddyStatusBar } from './SpoolBuddyStatusBar';
 import { useSpoolBuddyState } from '../../hooks/useSpoolBuddyState';
-import { spoolbuddyApi } from '../../api/client';
+import { api, spoolbuddyApi } from '../../api/client';
 import { VirtualKeyboard } from '../VirtualKeyboard';
 
 export function SpoolBuddyLayout() {
   const [selectedPrinterId, setSelectedPrinterId] = useState<number | null>(null);
   const [alert, setAlert] = useState<{ type: 'warning' | 'error' | 'info'; message: string } | null>(null);
   const [blanked, setBlanked] = useState(false);
+  const [displayBrightness, setDisplayBrightness] = useState(100);
+  const [displayBlankTimeout, setDisplayBlankTimeout] = useState(0);
   const lastActivityRef = useRef(Date.now());
+  const { i18n } = useTranslation();
   const sbState = useSpoolBuddyState();
 
-  // Query device data for display settings (brightness + blank timeout)
+  // Sync language from backend settings (kiosk has its own browser with empty localStorage)
+  const { data: appSettings } = useQuery({
+    queryKey: ['settings'],
+    queryFn: api.getSettings,
+  });
+  useEffect(() => {
+    if (appSettings?.language && appSettings.language !== i18n.language) {
+      i18n.changeLanguage(appSettings.language);
+    }
+  }, [appSettings?.language, i18n]);
+
+  // Query device data to initialize display settings on any page
   const { data: devices = [] } = useQuery({
     queryKey: ['spoolbuddy-devices'],
     queryFn: () => spoolbuddyApi.getDevices(),
-    refetchInterval: 15000,
+    refetchInterval: 30000,
   });
   const device = devices[0];
-  const brightness = device?.display_brightness ?? 100;
-  const blankTimeout = device?.display_blank_timeout ?? 0;
+
+  // Sync display settings from device on initial load
+  const initializedRef = useRef(false);
+  useEffect(() => {
+    if (device && !initializedRef.current) {
+      setDisplayBrightness(device.display_brightness);
+      setDisplayBlankTimeout(device.display_blank_timeout);
+      initializedRef.current = true;
+    }
+  }, [device]);
 
   // Force dark theme on mount, restore on unmount
   useEffect(() => {
@@ -59,38 +82,20 @@ export function SpoolBuddyLayout() {
     };
   }, [resetActivity]);
 
-  // Reset on NFC/scale activity (WebSocket events)
-  const prevWeightRef = useRef(sbState.weight);
-  const prevSpoolRef = useRef(sbState.matchedSpool);
-  const prevTagRef = useRef(sbState.unknownTagUid);
-  useEffect(() => {
-    if (
-      sbState.weight !== prevWeightRef.current ||
-      sbState.matchedSpool !== prevSpoolRef.current ||
-      sbState.unknownTagUid !== prevTagRef.current
-    ) {
-      prevWeightRef.current = sbState.weight;
-      prevSpoolRef.current = sbState.matchedSpool;
-      prevTagRef.current = sbState.unknownTagUid;
-      lastActivityRef.current = Date.now();
-      setBlanked(false);
-    }
-  }, [sbState.weight, sbState.matchedSpool, sbState.unknownTagUid]);
-
   // Screen blank timer
   useEffect(() => {
-    if (blankTimeout <= 0) return;
+    if (displayBlankTimeout <= 0) return;
     const interval = setInterval(() => {
-      if (Date.now() - lastActivityRef.current >= blankTimeout * 1000) {
+      if (Date.now() - lastActivityRef.current >= displayBlankTimeout * 1000) {
         setBlanked(true);
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [blankTimeout]);
+  }, [displayBlankTimeout]);
 
-  // CSS brightness filter (software dimming for HDMI displays)
-  const brightnessStyle = brightness < 100
-    ? { filter: `brightness(${brightness / 100})` } as const
+  // CSS brightness filter (software dimming)
+  const brightnessStyle = displayBrightness < 100
+    ? { filter: `brightness(${displayBrightness / 100})` } as const
     : undefined;
 
   return (
@@ -106,7 +111,11 @@ export function SpoolBuddyLayout() {
         />
 
         <main className="flex-1 overflow-y-auto">
-          <Outlet context={{ selectedPrinterId, setSelectedPrinterId, sbState, setAlert }} />
+          <Outlet context={{
+            selectedPrinterId, setSelectedPrinterId, sbState, setAlert,
+            displayBrightness, setDisplayBrightness,
+            displayBlankTimeout, setDisplayBlankTimeout,
+          }} />
         </main>
 
         <SpoolBuddyStatusBar alert={alert} />
@@ -131,4 +140,8 @@ export interface SpoolBuddyOutletContext {
   setSelectedPrinterId: (id: number) => void;
   sbState: ReturnType<typeof useSpoolBuddyState>;
   setAlert: (alert: { type: 'warning' | 'error' | 'info'; message: string } | null) => void;
+  displayBrightness: number;
+  setDisplayBrightness: (brightness: number) => void;
+  displayBlankTimeout: number;
+  setDisplayBlankTimeout: (timeout: number) => void;
 }

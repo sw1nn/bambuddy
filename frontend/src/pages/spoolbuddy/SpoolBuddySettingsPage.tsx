@@ -131,7 +131,11 @@ function DeviceTab({ device }: { device: SpoolBuddyDevice }) {
 
 // --- Display Tab ---
 
-function DisplayTab({ device }: { device: SpoolBuddyDevice }) {
+function DisplayTab({ device, onBrightnessChange, onBlankTimeoutChange }: {
+  device: SpoolBuddyDevice;
+  onBrightnessChange: (value: number) => void;
+  onBlankTimeoutChange: (value: number) => void;
+}) {
   const { t } = useTranslation();
   const [brightness, setBrightness] = useState(device.display_brightness);
   const [blankTimeout, setBlankTimeout] = useState(device.display_blank_timeout);
@@ -162,11 +166,13 @@ function DisplayTab({ device }: { device: SpoolBuddyDevice }) {
 
   const handleBrightnessChange = (value: number) => {
     setBrightness(value);
+    onBrightnessChange(value);  // Instant layout update
     sendDisplayUpdate(value, blankTimeout);
   };
 
   const handleBlankTimeoutChange = (value: number) => {
     setBlankTimeout(value);
+    onBlankTimeoutChange(value);  // Instant layout update
     sendDisplayUpdate(brightness, value);
   };
 
@@ -183,7 +189,7 @@ function DisplayTab({ device }: { device: SpoolBuddyDevice }) {
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
-              Saved
+              {t('spoolbuddy.settings.saved', 'Saved')}
             </span>
           )}
         </div>
@@ -214,7 +220,7 @@ function DisplayTab({ device }: { device: SpoolBuddyDevice }) {
           {t('spoolbuddy.settings.screenBlank', 'Screen Blank Timeout')}
         </h3>
         <p className="text-xs text-zinc-500 mb-3">
-          {t('spoolbuddy.settings.screenBlankDesc', 'Screen turns off after inactivity. Wakes on NFC scan or weight change.')}
+          {t('spoolbuddy.settings.screenBlankDesc', 'Screen turns off after inactivity. Touch to wake.')}
         </p>
         <div className="grid grid-cols-3 gap-2">
           {BLANK_OPTIONS.map((opt) => (
@@ -234,7 +240,7 @@ function DisplayTab({ device }: { device: SpoolBuddyDevice }) {
       </div>
 
       <p className="text-xs text-zinc-600 text-center">
-        {t('spoolbuddy.settings.displayNote', 'Brightness is applied as a software filter. Screen blank activates after inactivity — touch to wake.')}
+        {t('spoolbuddy.settings.displayNote', 'Brightness is applied as a software filter.')}
       </p>
     </div>
   );
@@ -242,7 +248,7 @@ function DisplayTab({ device }: { device: SpoolBuddyDevice }) {
 
 // --- Scale Tab ---
 
-function StepIndicator({ step }: { step: 'tare' | 'weight' }) {
+function StepIndicator({ step, labels }: { step: 'tare' | 'weight'; labels: { tare: string; weight: string } }) {
   return (
     <div className="flex flex-col items-center w-16 shrink-0 pt-1">
       {/* Step 1 circle */}
@@ -258,7 +264,7 @@ function StepIndicator({ step }: { step: 'tare' | 'weight' }) {
         ) : '1'}
       </div>
       <span className={`text-[10px] mt-0.5 ${step === 'tare' ? 'text-green-400 font-medium' : 'text-green-400/60'}`}>
-        Tare
+        {labels.tare}
       </span>
 
       {/* Connector line */}
@@ -273,7 +279,7 @@ function StepIndicator({ step }: { step: 'tare' | 'weight' }) {
         2
       </div>
       <span className={`text-[10px] mt-0.5 ${step === 'weight' ? 'text-green-400 font-medium' : 'text-zinc-600'}`}>
-        Weight
+        {labels.weight}
       </span>
     </div>
   );
@@ -409,26 +415,26 @@ function ScaleTab({ device, weight, weightStable, rawAdc }: {
 
   // --- Calibration wizard: step indicator left + content right ---
   return (
-    <div className="flex h-full gap-3">
+    <div className="flex gap-3">
       {/* Left: step indicator */}
-      <StepIndicator step={calStep} />
+      <StepIndicator step={calStep} labels={{ tare: t('spoolbuddy.weight.tare', 'Tare'), weight: t('spoolbuddy.settings.knownWeight', 'Known weight') }} />
 
       {/* Right: content */}
-      <div className="flex-1 flex flex-col min-h-0 min-w-0">
+      <div className="flex-1 min-w-0">
         {/* Live weight bar */}
-        <div className="flex items-center gap-2 bg-zinc-800 rounded-lg px-3 py-2 mb-2">
+        <div className="flex items-center gap-2 bg-zinc-800 rounded-lg px-3 py-1.5 mb-1.5">
           <div className={`w-2 h-2 rounded-full shrink-0 ${weightStable ? 'bg-green-500' : 'bg-amber-500 animate-pulse'}`} />
           <span className="text-sm font-mono text-zinc-200">
             {weight !== null ? `${weight.toFixed(1)} g` : '-- g'}
           </span>
           <span className={`text-xs ml-auto ${weightStable ? 'text-green-400' : 'text-amber-400'}`}>
-            {weightStable ? 'Stable' : 'Settling...'}
+            {weightStable ? t('spoolbuddy.settings.stable', 'Stable') : t('spoolbuddy.settings.settling', 'Settling...')}
           </span>
         </div>
 
         {/* Status message */}
         {status && (
-          <div className={`rounded-lg px-3 py-1.5 mb-2 text-sm ${
+          <div className={`rounded-lg px-3 py-1.5 mb-1.5 text-xs ${
             status.type === 'ok' ? 'bg-green-900/30 text-green-300 border border-green-800' : 'bg-red-900/30 text-red-300 border border-red-800'
           }`}>
             {status.msg}
@@ -437,25 +443,23 @@ function ScaleTab({ device, weight, weightStable, rawAdc }: {
 
         {/* Step content */}
         {calStep === 'tare' ? (
-          <div className="flex-1 flex flex-col">
-            <p className="text-sm text-zinc-300 mb-4">
-              {t('spoolbuddy.settings.calStep1', 'Remove all items from the scale and press Set Zero.')}
-            </p>
-          </div>
+          <p className="text-sm text-zinc-300 mb-3">
+            {t('spoolbuddy.settings.calStep1', 'Remove all items from the scale and press Set Zero.')}
+          </p>
         ) : (
-          <div className="flex-1 flex flex-col min-h-0">
-            <div className="flex items-center gap-2 mb-2">
+          <>
+            <div className="flex items-center gap-2 mb-1.5">
               <span className="text-xs text-zinc-400 shrink-0">{t('spoolbuddy.settings.knownWeight', 'Known weight')}</span>
-              <div className="flex-1 bg-zinc-900 border border-zinc-600 rounded px-3 py-1.5 text-right text-lg font-mono text-zinc-100">
+              <div className="flex-1 bg-zinc-900 border border-zinc-600 rounded px-3 py-1 text-right text-lg font-mono text-zinc-100">
                 {knownWeight || '0'}<span className="text-zinc-500 ml-1">g</span>
               </div>
             </div>
-            <div className="grid grid-cols-4 gap-1.5 mb-2">
+            <div className="grid grid-cols-4 gap-1 mb-1.5">
               {['7','8','9','backspace','4','5','6','.','1','2','3','0'].map((key) => (
                 <button
                   key={key}
                   onClick={() => numpadPress(key)}
-                  className={`rounded text-lg font-medium transition-colors min-h-[52px] active:scale-95 ${
+                  className={`rounded text-lg font-medium transition-colors h-[48px] active:scale-95 ${
                     key === 'backspace'
                       ? 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600'
                       : 'bg-zinc-800 text-zinc-100 hover:bg-zinc-700 border border-zinc-700'
@@ -465,21 +469,21 @@ function ScaleTab({ device, weight, weightStable, rawAdc }: {
                 </button>
               ))}
             </div>
-          </div>
+          </>
         )}
 
         {/* Action buttons */}
-        <div className="flex gap-2 mt-auto">
+        <div className="flex gap-2">
           <button
             onClick={() => { setCalStep('idle'); setStatus(null); }}
-            className="flex-1 px-4 py-2 rounded-lg text-sm bg-zinc-700 text-zinc-300 hover:bg-zinc-600 transition-colors min-h-[44px]"
+            className="flex-1 px-4 py-2 rounded-lg text-sm bg-zinc-700 text-zinc-300 hover:bg-zinc-600 transition-colors h-[40px]"
           >
             {t('common.cancel', 'Cancel')}
           </button>
           <button
             onClick={handleCalStep}
             disabled={busy}
-            className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-green-600 text-white hover:bg-green-700 disabled:opacity-40 transition-colors min-h-[44px] flex items-center justify-center gap-2"
+            className="flex-1 px-4 py-2 rounded-lg text-sm font-medium bg-green-600 text-white hover:bg-green-700 disabled:opacity-40 transition-colors h-[40px] flex items-center justify-center gap-2"
           >
             {busy && (
               <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
@@ -631,7 +635,7 @@ function UpdatesTab({ device }: { device: SpoolBuddyDevice }) {
 type SettingsTab = 'device' | 'display' | 'scale' | 'updates';
 
 export function SpoolBuddySettingsPage() {
-  const { sbState } = useOutletContext<SpoolBuddyOutletContext>();
+  const { sbState, setDisplayBrightness, setDisplayBlankTimeout } = useOutletContext<SpoolBuddyOutletContext>();
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<SettingsTab>('device');
 
@@ -645,6 +649,7 @@ export function SpoolBuddySettingsPage() {
   const device = sbState.deviceId
     ? devices.find((d) => d.device_id === sbState.deviceId) ?? devices[0]
     : devices[0];
+
 
   const tabs: { id: SettingsTab; label: string }[] = [
     { id: 'device', label: t('spoolbuddy.settings.tabDevice', 'Device') },
@@ -687,7 +692,13 @@ export function SpoolBuddySettingsPage() {
         ) : (
           <>
             {activeTab === 'device' && <DeviceTab device={device} />}
-            {activeTab === 'display' && <DisplayTab device={device} />}
+            {activeTab === 'display' && (
+              <DisplayTab
+                device={device}
+                onBrightnessChange={setDisplayBrightness}
+                onBlankTimeoutChange={setDisplayBlankTimeout}
+              />
+            )}
             {activeTab === 'scale' && (
               <ScaleTab
                 device={device}

@@ -780,6 +780,7 @@ export interface AppSettings {
   check_updates: boolean;
   check_printer_firmware: boolean;
   include_beta_updates: boolean;
+  language: string;
   notification_language: string;
   // AMS threshold settings
   ams_humidity_good: number;  // <= this is green
