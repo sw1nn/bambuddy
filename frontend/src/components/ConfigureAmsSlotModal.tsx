@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { X, Loader2, Settings2, ChevronDown, CheckCircle2, RotateCcw } from 'lucide-react';
@@ -242,6 +242,7 @@ export function ConfigureAmsSlotModal({
   const [searchQuery, setSearchQuery] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [showExtendedColors, setShowExtendedColors] = useState(false);
+  const scrolledToRef = useRef<string>('');
 
   // Fetch cloud settings (gracefully handle 401 when logged out)
   const { data: cloudSettings, isLoading: settingsLoading, isError: cloudError } = useQuery({
@@ -735,6 +736,7 @@ export function ConfigureAmsSlotModal({
       setColorInput('');
       setSearchQuery('');
       setShowSuccess(false);
+      scrolledToRef.current = '';
     }
   }, [isOpen, slotInfo.savedPresetId, slotInfo.trayInfoIdx, slotInfo.trayColor, cloudSettings?.filament]);
 
@@ -769,6 +771,17 @@ export function ConfigureAmsSlotModal({
       return () => document.removeEventListener('keydown', handleKeyDown);
     }
   }, [isOpen, handleKeyDown]);
+
+  // Scroll selected preset into view only when the selection changes (not on every render).
+  // Inline callback refs cause scrollIntoView to fire every render, which on Windows
+  // creates an infinite scroll loop due to scroll → re-render → scrollIntoView cycles.
+  useEffect(() => {
+    if (selectedPresetId && selectedPresetId !== scrolledToRef.current) {
+      scrolledToRef.current = selectedPresetId;
+      const el = document.querySelector(`[data-preset-id="${CSS.escape(selectedPresetId)}"]`);
+      el?.scrollIntoView({ block: 'nearest' });
+    }
+  }, [selectedPresetId]);
 
   if (!isOpen) return null;
 
@@ -889,9 +902,7 @@ export function ConfigureAmsSlotModal({
                     filteredPresets.map((preset) => (
                       <button
                         key={preset.id}
-                        ref={selectedPresetId === preset.id ? (el) => {
-                          el?.scrollIntoView({ block: 'nearest' });
-                        } : undefined}
+                        data-preset-id={preset.id}
                         onClick={() => setSelectedPresetId(preset.id)}
                         className={`w-full p-2 rounded-lg border text-left transition-colors ${
                           selectedPresetId === preset.id
@@ -1126,9 +1137,7 @@ export function ConfigureAmsSlotModal({
                       filteredPresets.map((preset) => (
                         <button
                           key={preset.id}
-                          ref={selectedPresetId === preset.id ? (el) => {
-                            el?.scrollIntoView({ block: 'nearest' });
-                          } : undefined}
+                          data-preset-id={preset.id}
                           onClick={() => setSelectedPresetId(preset.id)}
                           className={`w-full p-2 rounded-lg border text-left transition-colors ${
                             selectedPresetId === preset.id
