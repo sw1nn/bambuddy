@@ -681,7 +681,10 @@ export function PrintModal({
             <p className={`text-sm text-bambu-gray ${mode === 'reprint' ? 'mb-4' : ''}`}>
               {mode === 'reprint' ? (
                 <>
-                  Send <span className="text-white">{archiveName}</span> to printer(s)
+                  Send <span className="text-white">{archiveName}</span> to{' '}
+                  {initialSelectedPrinterIds?.length === 1 && printers
+                    ? <span className="text-white">{printers.find(p => p.id === initialSelectedPrinterIds[0])?.name ?? 'printer(s)'}</span>
+                    : 'printer(s)'}
                 </>
               ) : (
                 <>

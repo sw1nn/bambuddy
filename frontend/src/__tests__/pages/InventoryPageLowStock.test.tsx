@@ -8,7 +8,7 @@
  * - Does not use localStorage
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render } from '../utils';
@@ -186,10 +186,10 @@ describe('InventoryPage - Low Stock Threshold', () => {
         const body = (await request.json()) as Partial<typeof mockSettings>;
         return HttpResponse.json({ ...mockSettings, ...body });
       }),
-      http.get('/api/v1/spools/', () => {
+      http.get('/api/v1/inventory/spools', () => {
         return HttpResponse.json(mockSpools);
       }),
-      http.get('/api/v1/spool-assignments/', () => {
+      http.get('/api/v1/inventory/assignments', () => {
         return HttpResponse.json([]);
       }),
       http.get('/api/v1/spoolman/settings', () => {
@@ -240,16 +240,17 @@ describe('InventoryPage - Low Stock Threshold', () => {
         expect(screen.getByText(/< 20%/i)).toBeInTheDocument();
       });
 
-      const editButton = screen.getByTitle(/edit/i);
+      // Find the edit button within the low stock threshold section
+      const thresholdText = screen.getByText(/< 20%/i);
+      const editButton = thresholdText.parentElement!.querySelector('button[title]') as HTMLElement;
       expect(editButton).toBeInTheDocument();
 
       await user.click(editButton);
 
-      // Input field should appear
+      // Input field should appear with default threshold value
       await waitFor(() => {
-        const input = screen.getByRole('textbox');
+        const input = screen.getByDisplayValue('20');
         expect(input).toBeInTheDocument();
-        expect(input).toHaveValue('20');
       });
     });
 
@@ -271,12 +272,13 @@ describe('InventoryPage - Low Stock Threshold', () => {
         expect(screen.getByText(/< 20%/i)).toBeInTheDocument();
       });
 
-      // Click edit button
-      const editButton = screen.getByTitle(/edit/i);
+      // Click edit button within the low stock threshold section
+      const thresholdText = screen.getByText(/< 20%/i);
+      const editButton = thresholdText.parentElement!.querySelector('button[title]') as HTMLElement;
       await user.click(editButton);
 
       // Enter new value
-      const input = screen.getByRole('textbox');
+      const input = screen.getByDisplayValue('20');
       await user.clear(input);
       await user.type(input, '15.5');
 
@@ -308,14 +310,15 @@ describe('InventoryPage - Low Stock Threshold', () => {
         expect(screen.getByText(/< 20%/i)).toBeInTheDocument();
       });
 
-      // Click edit button
-      const editButton = screen.getByTitle(/edit/i);
+      // Click edit button within the low stock threshold section
+      const thresholdText = screen.getByText(/< 20%/i);
+      const editButton = thresholdText.parentElement!.querySelector('button[title]') as HTMLElement;
       await user.click(editButton);
 
       // Try invalid values
-      const input = screen.getByRole('textbox');
+      const input = screen.getByDisplayValue('20');
 
-      // Too high
+      // Too low (0 is below the 0.1 minimum)
       await user.clear(input);
       await user.type(input, '0');
 
@@ -336,12 +339,13 @@ describe('InventoryPage - Low Stock Threshold', () => {
         expect(screen.getByText(/< 20%/i)).toBeInTheDocument();
       });
 
-      // Click edit button
-      const editButton = screen.getByTitle(/edit/i);
+      // Click edit button within the low stock threshold section
+      const thresholdText = screen.getByText(/< 20%/i);
+      const editButton = thresholdText.parentElement!.querySelector('button[title]') as HTMLElement;
       await user.click(editButton);
 
       // Change value
-      const input = screen.getByRole('textbox');
+      const input = screen.getByDisplayValue('20');
       await user.clear(input);
       await user.type(input, '30');
 
