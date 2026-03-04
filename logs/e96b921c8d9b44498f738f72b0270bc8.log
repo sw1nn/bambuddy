@@ -1,0 +1,174 @@
+2026-03-05 00:00:20,359 INFO [backend.app.main] Recorded 1 AMS sensor history entries
+2026-03-05 00:00:41,065 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:01:11,069 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:01:41,070 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:02:11,075 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:02:41,077 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:03:11,081 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:03:41,084 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:04:11,087 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:04:41,089 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:05:11,092 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:05:20,364 INFO [backend.app.main] Recorded 1 AMS sensor history entries
+2026-03-05 00:05:41,096 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:06:11,098 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:06:41,100 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:07:11,103 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:07:41,105 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:08:01,797 INFO [backend.app.api.routes.cloud] get_filament_info called with 1 IDs: ['GFA01']
+2026-03-05 00:08:03,079 INFO [backend.app.api.routes.websocket] WebSocket client disconnected normally
+2026-03-05 00:08:03,308 INFO [backend.app.api.routes.websocket] WebSocket client connecting...
+2026-03-05 00:08:03,309 INFO [backend.app.api.routes.websocket] WebSocket client connected
+2026-03-05 00:08:03,311 INFO [backend.app.api.routes.websocket] Sent initial status for 1 printers
+2026-03-05 00:08:03,492 INFO [backend.app.api.routes.cloud] get_filament_info called with 1 IDs: ['GFA01']
+2026-03-05 00:08:11,109 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:08:34,548 INFO [backend.app.main] [Printer 1] Broadcasting AMS change via WebSocket
+2026-03-05 00:08:40,635 INFO [backend.app.main] [Printer 1] Broadcasting AMS change via WebSocket
+2026-03-05 00:08:41,112 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:08:42,682 INFO [backend.app.main] [Printer 1] Broadcasting AMS change via WebSocket
+2026-03-05 00:08:42,693 INFO [backend.app.services.spool_tag_matcher] Color resolve: tray_id_name='A01-K1' → resolved='Charcoal'
+2026-03-05 00:08:42,696 WARNING [backend.app.main] RFID spool auto-assign failed: greenlet_spawn has not been called; can't call await_only() here. Was IO attempted in an unexpected place? (Background on this error at: https://sqlalche.me/e/20/xd2s)
+2026-03-05 00:09:11,114 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:09:41,117 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:09:52,319 INFO [backend.app.api.routes.websocket] WebSocket client disconnected normally
+2026-03-05 00:09:52,528 INFO [backend.app.api.routes.websocket] WebSocket client connecting...
+2026-03-05 00:09:52,529 INFO [backend.app.api.routes.websocket] WebSocket client connected
+2026-03-05 00:09:52,531 INFO [backend.app.api.routes.websocket] Sent initial status for 1 printers
+2026-03-05 00:09:52,732 INFO [backend.app.api.routes.cloud] get_filament_info called with 1 IDs: ['GFA01']
+2026-03-05 00:10:11,121 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:10:12,050 INFO [backend.app.api.routes.websocket] WebSocket client disconnected normally
+2026-03-05 00:10:12,151 INFO [backend.app.services.print_scheduler] Print scheduler stopped
+2026-03-05 00:10:12,151 INFO [backend.app.services.background_dispatch] Background dispatch dispatcher stopped
+2026-03-05 00:10:12,151 INFO [backend.app.services.smart_plug_manager] Smart plug scheduler stopped
+2026-03-05 00:10:12,152 INFO [backend.app.services.notification_service] Notification digest scheduler stopped
+2026-03-05 00:10:12,152 INFO [backend.app.services.github_backup] Stopped GitHub backup scheduler
+2026-03-05 00:10:12,152 INFO [backend.app.main] AMS history recording stopped
+2026-03-05 00:10:12,152 INFO [backend.app.main] Printer runtime tracking stopped
+2026-03-05 00:10:12,152 INFO [backend.app.main] SpoolBuddy watchdog stopped
+2026-03-05 00:10:12,152 INFO [backend.app.main] Camera stream cleanup stopped
+2026-03-05 00:10:12,154 INFO [backend.app.services.virtual_printer.manager] Stopping all virtual printer services...
+2026-03-05 00:10:12,154 INFO [backend.app.services.virtual_printer.ftp_server] Stopping FTP server
+2026-03-05 00:10:12,154 INFO [backend.app.services.virtual_printer.mqtt_server] Stopping simple MQTT server
+2026-03-05 00:10:12,154 INFO [backend.app.services.virtual_printer.mqtt_server] Periodic status push task stopped
+2026-03-05 00:10:12,155 INFO [backend.app.services.virtual_printer.bind_server] Stopping bind server
+2026-03-05 00:10:12,155 INFO [backend.app.services.virtual_printer.ssdp_server] Stopping SSDP server
+2026-03-05 00:10:12,155 INFO [backend.app.services.virtual_printer.ftp_server] Stopping FTP server
+2026-03-05 00:10:12,155 INFO [backend.app.services.virtual_printer.mqtt_server] Stopping simple MQTT server
+2026-03-05 00:10:12,156 INFO [backend.app.services.virtual_printer.bind_server] Stopping bind server
+2026-03-05 00:10:12,156 INFO [backend.app.services.virtual_printer.manager] Removed VP instance: Bambuddy_Review
+2026-03-05 00:10:12,156 INFO [backend.app.services.virtual_printer.manager] All virtual printer services stopped
+2026-03-05 00:10:12,162 INFO [root] WAL checkpoint completed
+2026-03-05 00:10:26,782 INFO [root] Logging to file: /opt/[user]/logs/bambuddy.log
+2026-03-05 00:10:26,783 INFO [root] Bambuddy starting - debug=False, log_level=INFO
+2026-03-05 00:10:27,886 INFO [backend.app.services.mqtt_relay] MQTT relay disabled
+2026-03-05 00:10:28,874 WARNING [backend.app.services.bambu_mqtt] [[SERIAL]] MQTT disconnected: rc=Unspecified error, flags=DisconnectFlags(is_disconnect_packet_from_server=False)
+2026-03-05 00:10:28,874 WARNING [backend.app.services.bambu_mqtt] [[SERIAL]] Disconnected shortly after request topic subscription. Disabling request topic for this printer.
+2026-03-05 00:10:28,928 INFO [backend.app.services.background_dispatch] Background dispatch dispatcher started
+2026-03-05 00:10:28,928 INFO [backend.app.services.smart_plug_manager] Smart plug scheduler started
+2026-03-05 00:10:28,932 INFO [backend.app.services.print_scheduler] Print scheduler started
+2026-03-05 00:10:28,935 INFO [backend.app.services.notification_service] Notification digest scheduler started
+2026-03-05 00:10:28,936 INFO [backend.app.services.github_backup] Starting GitHub backup scheduler
+2026-03-05 00:10:28,936 INFO [backend.app.main] AMS history recording started
+2026-03-05 00:10:28,936 INFO [backend.app.main] Printer runtime tracking started
+2026-03-05 00:10:28,936 INFO [backend.app.main] SpoolBuddy watchdog started
+2026-03-05 00:10:28,936 INFO [backend.app.main] Camera stream cleanup started
+2026-03-05 00:10:28,985 INFO [backend.app.services.virtual_printer.manager] [VP Bambuddy_Review] Starting server-mode services on [IP]
+2026-03-05 00:10:28,985 INFO [backend.app.services.virtual_printer.certificate] Deleted printer certificate (CA preserved)
+2026-03-05 00:10:28,986 INFO [backend.app.services.virtual_printer.certificate] Generating certificates for virtual printer (serial: [SERIAL])...
+2026-03-05 00:10:29,046 INFO [backend.app.services.virtual_printer.certificate] Using existing CA certificate (expires in 7284 days)
+2026-03-05 00:10:29,185 INFO [backend.app.services.virtual_printer.certificate] Generating printer certificate with CN=[SERIAL], local IP: [IP]
+2026-03-05 00:10:29,186 INFO [backend.app.services.virtual_printer.certificate] Added additional SAN IP: [IP]
+2026-03-05 00:10:29,189 INFO [backend.app.services.virtual_printer.certificate] Generated certificate chain at /opt/[user]/data/virtual_printer/certs/2
+2026-03-05 00:10:29,189 INFO [backend.app.services.virtual_printer.certificate]   CA: CN=Virtual Printer CA
+2026-03-05 00:10:29,190 INFO [backend.app.services.virtual_printer.certificate]   Printer: CN=[SERIAL]
+2026-03-05 00:10:29,190 INFO [backend.app.services.virtual_printer.manager] [VP Bambuddy_Review] Server-mode services started on [IP]
+2026-03-05 00:10:29,190 INFO [backend.app.services.virtual_printer.manager] Started server-mode VP: Bambuddy_Review on [IP]
+2026-03-05 00:10:29,190 INFO [root] Virtual printer manager synced from database
+2026-03-05 00:10:29,190 INFO [backend.app.services.virtual_printer.ftp_server] Starting virtual printer implicit FTPS on port 9990
+2026-03-05 00:10:29,192 INFO [backend.app.services.virtual_printer.ftp_server] FTP SSL context created with standard settings
+2026-03-05 00:10:29,193 INFO [backend.app.services.virtual_printer.mqtt_server] Starting simple MQTT server on port 8883
+2026-03-05 00:10:29,238 INFO [backend.app.services.virtual_printer.mqtt_server] MQTT SSL cert info: subject=CN = [SERIAL]
+issuer=CN = Virtual Printer CA
+2026-03-05 00:10:29,238 INFO [backend.app.services.virtual_printer.mqtt_server] MQTT SSL context: TLS 1.2+, cert=/opt/[user]/data/virtual_printer/certs/2/virtual_printer.crt
+2026-03-05 00:10:29,238 INFO [backend.app.services.virtual_printer.mqtt_server] Setting up MQTT server with SSL error handling...
+2026-03-05 00:10:29,240 INFO [backend.app.services.virtual_printer.bind_server] Starting bind server on ports [3000, 3002] (serial=[SERIAL], model=N2S, tls=True)
+2026-03-05 00:10:29,240 INFO [backend.app.services.virtual_printer.ssdp_server] Starting virtual printer SSDP server: Bambuddy_Review ([SERIAL])
+2026-03-05 00:10:29,240 INFO [backend.app.services.virtual_printer.ssdp_server] SSDP server listening on port 2021, advertising IP: [IP]
+2026-03-05 00:10:29,241 INFO [backend.app.services.virtual_printer.ssdp_server] Virtual printer: Bambuddy_Review ([SERIAL]) model=N2S
+2026-03-05 00:10:29,241 INFO [backend.app.services.virtual_printer.ssdp_server] Sent initial SSDP NOTIFY announcement
+2026-03-05 00:10:29,242 INFO [backend.app.services.virtual_printer.ftp_server] Implicit FTPS server started on port 9990
+2026-03-05 00:10:29,242 INFO [backend.app.services.virtual_printer.ftp_server] FTP passive data port range: 50000-50100
+2026-03-05 00:10:29,242 INFO [backend.app.services.virtual_printer.mqtt_server] Simple MQTT server listening on port 8883
+2026-03-05 00:10:29,242 INFO [backend.app.services.virtual_printer.bind_server] Bind server listening on [IP]:3000 (plain)
+2026-03-05 00:10:29,242 INFO [backend.app.services.virtual_printer.mqtt_server] Starting periodic status push task
+2026-03-05 00:10:29,243 INFO [backend.app.services.virtual_printer.bind_server] Bind server listening on [IP]:3002 (TLS)
+2026-03-05 00:10:29,257 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:10:29,827 INFO [backend.app.api.routes.websocket] WebSocket client connecting...
+2026-03-05 00:10:29,828 INFO [backend.app.api.routes.websocket] WebSocket client connected
+2026-03-05 00:10:29,828 INFO [backend.app.api.routes.websocket] Sent initial status for 1 printers
+2026-03-05 00:10:30,705 INFO [backend.app.services.bambu_mqtt] [[SERIAL]] Firmware version: 01.07.02.00
+2026-03-05 00:10:30,850 INFO [backend.app.main] [Printer 1] Broadcasting AMS change via WebSocket
+2026-03-05 00:10:30,874 INFO [backend.app.services.spool_tag_matcher] Color resolve: tray_id_name='A01-K1' → resolved='Charcoal'
+2026-03-05 00:10:30,882 WARNING [backend.app.main] RFID spool auto-assign failed: greenlet_spawn has not been called; can't call await_only() here. Was IO attempted in an unexpected place? (Background on this error at: https://sqlalche.me/e/20/xd2s)
+2026-03-05 00:10:38,984 INFO [backend.app.main] Recorded 1 AMS sensor history entries
+2026-03-05 00:10:59,259 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:11:19,025 INFO [backend.app.api.routes.websocket] WebSocket client disconnected normally
+2026-03-05 00:11:19,299 INFO [backend.app.api.routes.websocket] WebSocket client connecting...
+2026-03-05 00:11:19,300 INFO [backend.app.api.routes.websocket] WebSocket client connected
+2026-03-05 00:11:19,304 INFO [backend.app.api.routes.websocket] Sent initial status for 1 printers
+2026-03-05 00:11:19,546 INFO [backend.app.api.routes.cloud] get_filament_info called with 1 IDs: ['GFA01']
+2026-03-05 00:11:20,345 WARNING [backend.app.services.firmware_check] Failed to get Bambu Lab page: 403
+2026-03-05 00:11:29,262 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:11:59,265 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:12:29,268 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:12:59,271 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:13:29,274 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:13:59,275 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:14:29,277 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:14:53,576 INFO [backend.app.api.routes.support] Log level changed to DEBUG
+2026-03-05 00:14:53,576 INFO [backend.app.api.routes.bug_report] Bug report: temporarily enabled debug logging
+2026-03-05 00:14:53,576 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Requesting status update (pushall)
+2026-03-05 00:14:53,951 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Found xcam inside print data: {'buildplate_marker_detector': True}
+2026-03-05 00:14:53,951 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Parsing xcam data - all fields: ['buildplate_marker_detector']
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received gcode_state: IDLE, gcode_file: , subtask_name: 
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] AMS dict fields: {'ams_exist_bits': '1', 'tray_exist_bits': 'e', 'tray_is_bbl_bits': 'e', 'tray_tar': '3', 'tray_now': '255', 'tray_pre': '255', 'tray_read_done_bits': 'e', 'tray_reading_bits': '0', 'version': 16, 'insert_flag': True, 'power_on_flag': True}
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] tray_now updated: 255
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Merged AMS data: 1 new units, 1 total
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] AMS 0 info=1002 (bit8=1) -> extruder 0
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ams_extruder_map: {'0': 0}
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ams_status: 0 (main=0, sub=0)
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] chamber_temper raw value: 5.0
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] chamber_temper direct value: 5.0°C (heater OFF)
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Chamber heating calculated: target=0.0, current=5.0, heating=False, respect_local=False
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Chamber temp updated to: 5.0, target: 0.0, heating: False
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] HMS data received: []
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ipcam field: {'ipcam_dev': '1', 'ipcam_record': 'enable', 'timelapse': 'disable', 'resolution': '1080p', 'tutk_server': 'disable', 'mode_bits': 3}
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -44dBm
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] lights_report: [{'node': 'chamber_light', 'mode': 'off'}]
+2026-03-05 00:14:53,954 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] gcode_state: IDLE -> IDLE, file: , subtask: 
+2026-03-05 00:14:55,969 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:14:55,969 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -50dBm
+2026-03-05 00:14:57,990 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:14:57,990 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -45dBm
+2026-03-05 00:14:59,279 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:14:59,654 DEBUG [backend.app.services.virtual_printer.ssdp_server] Sent SSDP NOTIFY for Bambuddy_Review
+2026-03-05 00:15:00,007 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:00,007 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -46dBm
+2026-03-05 00:15:02,025 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:02,025 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -49dBm
+2026-03-05 00:15:04,048 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:06,071 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:06,072 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -44dBm
+2026-03-05 00:15:08,085 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:08,085 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -46dBm
+2026-03-05 00:15:10,119 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:12,131 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:12,131 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -47dBm
+2026-03-05 00:15:14,155 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:14,155 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -49dBm
+2026-03-05 00:15:16,174 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:16,175 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -47dBm
+2026-03-05 00:15:20,206 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:20,206 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -48dBm
+2026-03-05 00:15:22,222 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
