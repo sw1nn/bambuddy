@@ -1,0 +1,200 @@
+2026-03-05 00:10:30,850 INFO [backend.app.main] [Printer 1] Broadcasting AMS change via WebSocket
+2026-03-05 00:10:30,874 INFO [backend.app.services.spool_tag_matcher] Color resolve: tray_id_name='A01-K1' → resolved='Charcoal'
+2026-03-05 00:10:30,882 WARNING [backend.app.main] RFID spool auto-assign failed: greenlet_spawn has not been called; can't call await_only() here. Was IO attempted in an unexpected place? (Background on this error at: https://sqlalche.me/e/20/xd2s)
+2026-03-05 00:10:38,984 INFO [backend.app.main] Recorded 1 AMS sensor history entries
+2026-03-05 00:10:59,259 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:11:19,025 INFO [backend.app.api.routes.websocket] WebSocket client disconnected normally
+2026-03-05 00:11:19,299 INFO [backend.app.api.routes.websocket] WebSocket client connecting...
+2026-03-05 00:11:19,300 INFO [backend.app.api.routes.websocket] WebSocket client connected
+2026-03-05 00:11:19,304 INFO [backend.app.api.routes.websocket] Sent initial status for 1 printers
+2026-03-05 00:11:19,546 INFO [backend.app.api.routes.cloud] get_filament_info called with 1 IDs: ['GFA01']
+2026-03-05 00:11:20,345 WARNING [backend.app.services.firmware_check] Failed to get Bambu Lab page: 403
+2026-03-05 00:11:29,262 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:11:59,265 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:12:29,268 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:12:59,271 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:13:29,274 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:13:59,275 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:14:29,277 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:14:53,576 INFO [backend.app.api.routes.support] Log level changed to DEBUG
+2026-03-05 00:14:53,576 INFO [backend.app.api.routes.bug_report] Bug report: temporarily enabled debug logging
+2026-03-05 00:14:53,576 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Requesting status update (pushall)
+2026-03-05 00:14:53,951 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Found xcam inside print data: {'buildplate_marker_detector': True}
+2026-03-05 00:14:53,951 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Parsing xcam data - all fields: ['buildplate_marker_detector']
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received gcode_state: IDLE, gcode_file: , subtask_name: 
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] AMS dict fields: {'ams_exist_bits': '1', 'tray_exist_bits': 'e', 'tray_is_bbl_bits': 'e', 'tray_tar': '3', 'tray_now': '255', 'tray_pre': '255', 'tray_read_done_bits': 'e', 'tray_reading_bits': '0', 'version': 16, 'insert_flag': True, 'power_on_flag': True}
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] tray_now updated: 255
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Merged AMS data: 1 new units, 1 total
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] AMS 0 info=1002 (bit8=1) -> extruder 0
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ams_extruder_map: {'0': 0}
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ams_status: 0 (main=0, sub=0)
+2026-03-05 00:14:53,952 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] chamber_temper raw value: 5.0
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] chamber_temper direct value: 5.0°C (heater OFF)
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Chamber heating calculated: target=0.0, current=5.0, heating=False, respect_local=False
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Chamber temp updated to: 5.0, target: 0.0, heating: False
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] HMS data received: []
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ipcam field: {'ipcam_dev': '1', 'ipcam_record': 'enable', 'timelapse': 'disable', 'resolution': '1080p', 'tutk_server': 'disable', 'mode_bits': 3}
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -44dBm
+2026-03-05 00:14:53,953 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] lights_report: [{'node': 'chamber_light', 'mode': 'off'}]
+2026-03-05 00:14:53,954 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] gcode_state: IDLE -> IDLE, file: , subtask: 
+2026-03-05 00:14:55,969 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:14:55,969 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -50dBm
+2026-03-05 00:14:57,990 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:14:57,990 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -45dBm
+2026-03-05 00:14:59,279 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:14:59,654 DEBUG [backend.app.services.virtual_printer.ssdp_server] Sent SSDP NOTIFY for Bambuddy_Review
+2026-03-05 00:15:00,007 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:00,007 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -46dBm
+2026-03-05 00:15:02,025 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:02,025 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -49dBm
+2026-03-05 00:15:04,048 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:06,071 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:06,072 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -44dBm
+2026-03-05 00:15:08,085 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:08,085 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -46dBm
+2026-03-05 00:15:10,119 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:12,131 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:12,131 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -47dBm
+2026-03-05 00:15:14,155 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:14,155 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -49dBm
+2026-03-05 00:15:16,174 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:16,175 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -47dBm
+2026-03-05 00:15:20,206 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:20,206 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -48dBm
+2026-03-05 00:15:22,222 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:23,591 INFO [backend.app.api.routes.support] Log level changed to INFO
+2026-03-05 00:15:23,591 INFO [backend.app.api.routes.bug_report] Bug report: restored normal logging
+2026-03-05 00:15:29,281 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:15:29,769 INFO [backend.app.api.routes.support] Log level changed to DEBUG
+2026-03-05 00:15:29,769 INFO [backend.app.api.routes.bug_report] Bug report: temporarily enabled debug logging
+2026-03-05 00:15:29,770 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Requesting status update (pushall)
+2026-03-05 00:15:29,834 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Found xcam inside print data: {'buildplate_marker_detector': True}
+2026-03-05 00:15:29,834 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Parsing xcam data - all fields: ['buildplate_marker_detector']
+2026-03-05 00:15:29,834 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received gcode_state: IDLE, gcode_file: , subtask_name: 
+2026-03-05 00:15:29,834 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] AMS dict fields: {'ams_exist_bits': '1', 'tray_exist_bits': 'e', 'tray_is_bbl_bits': 'e', 'tray_tar': '3', 'tray_now': '255', 'tray_pre': '255', 'tray_read_done_bits': 'e', 'tray_reading_bits': '0', 'version': 16, 'insert_flag': True, 'power_on_flag': True}
+2026-03-05 00:15:29,834 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] tray_now updated: 255
+2026-03-05 00:15:29,834 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Merged AMS data: 1 new units, 1 total
+2026-03-05 00:15:29,834 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] AMS 0 info=1002 (bit8=1) -> extruder 0
+2026-03-05 00:15:29,835 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ams_extruder_map: {'0': 0}
+2026-03-05 00:15:29,835 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ams_status: 0 (main=0, sub=0)
+2026-03-05 00:15:29,835 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:29,835 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] chamber_temper raw value: 5.0
+2026-03-05 00:15:29,835 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] chamber_temper direct value: 5.0°C (heater OFF)
+2026-03-05 00:15:29,835 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Chamber heating calculated: target=0.0, current=5.0, heating=False, respect_local=False
+2026-03-05 00:15:29,835 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Chamber temp updated to: 5.0, target: 0.0, heating: False
+2026-03-05 00:15:29,835 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] HMS data received: []
+2026-03-05 00:15:29,835 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ipcam field: {'ipcam_dev': '1', 'ipcam_record': 'enable', 'timelapse': 'disable', 'resolution': '1080p', 'tutk_server': 'disable', 'mode_bits': 3}
+2026-03-05 00:15:29,836 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -45dBm
+2026-03-05 00:15:29,836 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] lights_report: [{'node': 'chamber_light', 'mode': 'off'}]
+2026-03-05 00:15:29,836 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] gcode_state: IDLE -> IDLE, file: , subtask: 
+2026-03-05 00:15:33,842 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:33,842 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -46dBm
+2026-03-05 00:15:36,469 DEBUG [httpcore.connection] connect_tcp.started host='ha.srvadri.ovh' port=443 local_address=None timeout=10.0 socket_options=None
+2026-03-05 00:15:36,472 DEBUG [httpcore.connection] connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x74880463b950>
+2026-03-05 00:15:36,473 DEBUG [httpcore.connection] start_tls.started ssl_context=<ssl.SSLContext object at 0x748804551350> server_hostname='ha.srvadri.ovh' timeout=10.0
+2026-03-05 00:15:36,481 DEBUG [httpcore.connection] start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x748805f09fa0>
+2026-03-05 00:15:36,482 DEBUG [httpcore.http11] send_request_headers.started request=<Request [b'GET']>
+2026-03-05 00:15:36,482 DEBUG [httpcore.http11] send_request_headers.complete
+2026-03-05 00:15:36,482 DEBUG [httpcore.http11] send_request_body.started request=<Request [b'GET']>
+2026-03-05 00:15:36,483 DEBUG [httpcore.http11] send_request_body.complete
+2026-03-05 00:15:36,483 DEBUG [httpcore.http11] receive_response_headers.started request=<Request [b'GET']>
+2026-03-05 00:15:36,487 DEBUG [httpcore.http11] receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'content-type', b'application/json'), (b'referrer-policy', b'no-referrer'), (b'x-content-type-options', b'nosniff'), (b'server', b''), (b'x-frame-options', b'SAMEORIGIN'), (b'content-length', b'354'), (b'date', b'Wed, 04 Mar 2026 23:15:36 GMT')])
+2026-03-05 00:15:36,488 INFO [httpx] HTTP Request: GET https://ha.srvadri.ovh/api/states/switch.sonoff_1000cda3b0 "HTTP/1.1 200 OK"
+2026-03-05 00:15:36,488 DEBUG [httpcore.http11] receive_response_body.started request=<Request [b'GET']>
+2026-03-05 00:15:36,488 DEBUG [httpcore.http11] receive_response_body.complete
+2026-03-05 00:15:36,488 DEBUG [httpcore.http11] response_closed.started
+2026-03-05 00:15:36,489 DEBUG [httpcore.http11] response_closed.complete
+2026-03-05 00:15:36,489 DEBUG [httpcore.connection] close.started
+2026-03-05 00:15:36,489 DEBUG [httpcore.connection] close.complete
+2026-03-05 00:15:36,524 DEBUG [httpcore.connection] connect_tcp.started host='ha.srvadri.ovh' port=443 local_address=None timeout=10.0 socket_options=None
+2026-03-05 00:15:36,527 DEBUG [httpcore.connection] connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7488046c7b00>
+2026-03-05 00:15:36,527 DEBUG [httpcore.connection] start_tls.started ssl_context=<ssl.SSLContext object at 0x74880463d9d0> server_hostname='ha.srvadri.ovh' timeout=10.0
+2026-03-05 00:15:36,536 DEBUG [httpcore.connection] start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x7488046c62d0>
+2026-03-05 00:15:36,536 DEBUG [httpcore.http11] send_request_headers.started request=<Request [b'GET']>
+2026-03-05 00:15:36,536 DEBUG [httpcore.http11] send_request_headers.complete
+2026-03-05 00:15:36,536 DEBUG [httpcore.http11] send_request_body.started request=<Request [b'GET']>
+2026-03-05 00:15:36,537 DEBUG [httpcore.http11] send_request_body.complete
+2026-03-05 00:15:36,537 DEBUG [httpcore.http11] receive_response_headers.started request=<Request [b'GET']>
+2026-03-05 00:15:36,540 DEBUG [httpcore.http11] receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'content-type', b'application/json'), (b'referrer-policy', b'no-referrer'), (b'x-content-type-options', b'nosniff'), (b'server', b''), (b'x-frame-options', b'SAMEORIGIN'), (b'content-length', b'416'), (b'date', b'Wed, 04 Mar 2026 23:15:36 GMT')])
+2026-03-05 00:15:36,540 INFO [httpx] HTTP Request: GET https://ha.srvadri.ovh/api/states/sensor.sonoff_1000cda3b0_power "HTTP/1.1 200 OK"
+2026-03-05 00:15:36,540 DEBUG [httpcore.http11] receive_response_body.started request=<Request [b'GET']>
+2026-03-05 00:15:36,541 DEBUG [httpcore.http11] receive_response_body.complete
+2026-03-05 00:15:36,541 DEBUG [httpcore.http11] response_closed.started
+2026-03-05 00:15:36,541 DEBUG [httpcore.http11] response_closed.complete
+2026-03-05 00:15:36,542 DEBUG [httpcore.http11] send_request_headers.started request=<Request [b'GET']>
+2026-03-05 00:15:36,542 DEBUG [httpcore.http11] send_request_headers.complete
+2026-03-05 00:15:36,542 DEBUG [httpcore.http11] send_request_body.started request=<Request [b'GET']>
+2026-03-05 00:15:36,542 DEBUG [httpcore.http11] send_request_body.complete
+2026-03-05 00:15:36,543 DEBUG [httpcore.http11] receive_response_headers.started request=<Request [b'GET']>
+2026-03-05 00:15:36,544 DEBUG [httpcore.http11] receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'content-type', b'application/json'), (b'referrer-policy', b'no-referrer'), (b'x-content-type-options', b'nosniff'), (b'server', b''), (b'x-frame-options', b'SAMEORIGIN'), (b'content-length', b'424'), (b'date', b'Wed, 04 Mar 2026 23:15:36 GMT')])
+2026-03-05 00:15:36,544 INFO [httpx] HTTP Request: GET https://ha.srvadri.ovh/api/states/sensor.sonoff_1000cda3b0_energy "HTTP/1.1 200 OK"
+2026-03-05 00:15:36,545 DEBUG [httpcore.http11] receive_response_body.started request=<Request [b'GET']>
+2026-03-05 00:15:36,545 DEBUG [httpcore.http11] receive_response_body.complete
+2026-03-05 00:15:36,545 DEBUG [httpcore.http11] response_closed.started
+2026-03-05 00:15:36,545 DEBUG [httpcore.http11] response_closed.complete
+2026-03-05 00:15:36,546 DEBUG [httpcore.http11] send_request_headers.started request=<Request [b'GET']>
+2026-03-05 00:15:36,546 DEBUG [httpcore.http11] send_request_headers.complete
+2026-03-05 00:15:36,546 DEBUG [httpcore.http11] send_request_body.started request=<Request [b'GET']>
+2026-03-05 00:15:36,546 DEBUG [httpcore.http11] send_request_body.complete
+2026-03-05 00:15:36,547 DEBUG [httpcore.http11] receive_response_headers.started request=<Request [b'GET']>
+2026-03-05 00:15:36,548 DEBUG [httpcore.http11] receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'content-type', b'application/json'), (b'referrer-policy', b'no-referrer'), (b'x-content-type-options', b'nosniff'), (b'server', b''), (b'x-frame-options', b'SAMEORIGIN'), (b'content-length', b'422'), (b'date', b'Wed, 04 Mar 2026 23:15:36 GMT')])
+2026-03-05 00:15:36,548 INFO [httpx] HTTP Request: GET https://ha.srvadri.ovh/api/states/sensor.a1 "HTTP/1.1 200 OK"
+2026-03-05 00:15:36,549 DEBUG [httpcore.http11] receive_response_body.started request=<Request [b'GET']>
+2026-03-05 00:15:36,549 DEBUG [httpcore.http11] receive_response_body.complete
+2026-03-05 00:15:36,549 DEBUG [httpcore.http11] response_closed.started
+2026-03-05 00:15:36,549 DEBUG [httpcore.http11] response_closed.complete
+2026-03-05 00:15:36,550 DEBUG [httpcore.connection] close.started
+2026-03-05 00:15:36,550 DEBUG [httpcore.connection] close.complete
+2026-03-05 00:15:38,989 INFO [backend.app.main] Recorded 1 AMS sensor history entries
+2026-03-05 00:15:39,890 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:41,904 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:45,940 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:49,977 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:51,989 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:54,015 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:56,035 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:58,050 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:15:58,050 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -44dBm
+2026-03-05 00:15:59,284 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:15:59,727 DEBUG [backend.app.services.virtual_printer.ssdp_server] Sent SSDP NOTIFY for Bambuddy_Review
+2026-03-05 00:15:59,778 INFO [backend.app.api.routes.support] Log level changed to INFO
+2026-03-05 00:15:59,778 INFO [backend.app.api.routes.bug_report] Bug report: restored normal logging
+2026-03-05 00:16:13,586 INFO [backend.app.api.routes.support] Log level changed to DEBUG
+2026-03-05 00:16:13,587 INFO [backend.app.api.routes.bug_report] Bug report: temporarily enabled debug logging
+2026-03-05 00:16:13,587 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Requesting status update (pushall)
+2026-03-05 00:16:13,651 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Found xcam inside print data: {'buildplate_marker_detector': True}
+2026-03-05 00:16:13,652 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Parsing xcam data - all fields: ['buildplate_marker_detector']
+2026-03-05 00:16:13,652 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received gcode_state: IDLE, gcode_file: , subtask_name: 
+2026-03-05 00:16:13,652 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] AMS dict fields: {'ams_exist_bits': '1', 'tray_exist_bits': 'e', 'tray_is_bbl_bits': 'e', 'tray_tar': '3', 'tray_now': '255', 'tray_pre': '255', 'tray_read_done_bits': 'e', 'tray_reading_bits': '0', 'version': 16, 'insert_flag': True, 'power_on_flag': True}
+2026-03-05 00:16:13,652 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] tray_now updated: 255
+2026-03-05 00:16:13,652 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Merged AMS data: 1 new units, 1 total
+2026-03-05 00:16:13,652 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] AMS 0 info=1002 (bit8=1) -> extruder 0
+2026-03-05 00:16:13,652 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ams_extruder_map: {'0': 0}
+2026-03-05 00:16:13,652 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ams_status: 0 (main=0, sub=0)
+2026-03-05 00:16:13,653 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:16:13,653 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] chamber_temper raw value: 5.0
+2026-03-05 00:16:13,653 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] chamber_temper direct value: 5.0°C (heater OFF)
+2026-03-05 00:16:13,653 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Chamber heating calculated: target=0.0, current=5.0, heating=False, respect_local=False
+2026-03-05 00:16:13,653 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Chamber temp updated to: 5.0, target: 0.0, heating: False
+2026-03-05 00:16:13,653 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] HMS data received: []
+2026-03-05 00:16:13,653 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] ipcam field: {'ipcam_dev': '1', 'ipcam_record': 'enable', 'timelapse': 'disable', 'resolution': '1080p', 'tutk_server': 'disable', 'mode_bits': 3}
+2026-03-05 00:16:13,653 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -45dBm
+2026-03-05 00:16:13,653 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] lights_report: [{'node': 'chamber_light', 'mode': 'off'}]
+2026-03-05 00:16:13,654 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] gcode_state: IDLE -> IDLE, file: , subtask: 
+2026-03-05 00:16:17,652 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:16:17,652 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -46dBm
+2026-03-05 00:16:21,680 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:16:23,708 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:16:29,286 INFO [backend.app.services.print_scheduler] Queue check: found 1 pending items: [(5, 1, 147, None)]
+2026-03-05 00:16:29,771 DEBUG [backend.app.services.virtual_printer.ssdp_server] Sent SSDP NOTIFY for Bambuddy_Review
+2026-03-05 00:16:31,775 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:16:31,775 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -50dBm
+2026-03-05 00:16:35,793 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:16:35,793 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -46dBm
+2026-03-05 00:16:37,820 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:16:37,820 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -48dBm
+2026-03-05 00:16:39,834 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:16:39,835 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -50dBm
+2026-03-05 00:16:41,851 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] Received command response: push_status
+2026-03-05 00:16:41,852 DEBUG [backend.app.services.bambu_mqtt] [[SERIAL]] wifi_signal received: -46dBm
