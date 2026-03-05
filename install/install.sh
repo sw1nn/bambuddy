@@ -335,6 +335,14 @@ create_user() {
 download_bambuddy() {
     log_info "Downloading BamBuddy..."
 
+    # Validate branch exists on remote before proceeding
+    if ! git ls-remote --exit-code --heads https://github.com/maziggy/bambuddy.git "$BRANCH" &>/dev/null; then
+        log_error "Branch '$BRANCH' not found in the BamBuddy repository."
+        log_info "Available branches:"
+        git ls-remote --heads https://github.com/maziggy/bambuddy.git | sed 's|.*refs/heads/|  - |'
+        exit 1
+    fi
+
     if [[ -d "$INSTALL_PATH/.git" ]]; then
         log_info "Existing installation found, updating..."
         # Add safe.directory to avoid "dubious ownership" error when running as root
