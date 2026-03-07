@@ -6,6 +6,7 @@ All notable changes to Bambuddy will be documented in this file.
 
 ### New Features
 - **Malaysian Ringgit Currency** ([#634](https://github.com/maziggy/bambuddy/issues/634)) — Added MYR (RM) to the list of supported currencies for filament cost tracking. Requested by @cynogen127.
+- **ETA Variable in Notifications** ([#638](https://github.com/maziggy/bambuddy/issues/638)) — Added `{eta}` template variable to print start, print progress, and queue job started notifications. Shows the estimated wall-clock completion time (e.g. "15:53" or "3:53 PM") based on the user's configured time format (12h/24h). Existing `{estimated_time}` still shows duration ("1h 23m"). Requested by @SebSeifert.
 
 ### Improved
 - **Separate Permission for AMS Spool Assignments** ([#635](https://github.com/maziggy/bambuddy/issues/635)) — Added a new `inventory:view_assignments` permission that controls whether spool-to-AMS-slot assignment data is visible on the Printers page. Previously, viewing spool assignments on printer cards required `inventory:read`, which also exposed the full Inventory page in the sidebar. Admins can now grant `inventory:view_assignments` without `inventory:read` so users can see what's loaded in the AMS without accessing the full spool inventory. All default groups (Administrators, Operators, Viewers) include the new permission automatically. Also fixed multi-word permission labels in the group editor (e.g. "Update_Own" → "Update Own"). Reported by @Minebuddy.
